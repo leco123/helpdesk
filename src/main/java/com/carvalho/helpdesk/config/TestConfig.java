@@ -7,15 +7,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile("teste")
+@Profile("test")
 public class TestConfig {
 
     @Autowired
     private DBService dbService;
 
     @Bean
-    public void instanciaDB() {
+    public boolean instanciaDB() {
         this.dbService.instanciaDB();
+        return true;
     }
 
 }
