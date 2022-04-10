@@ -6,14 +6,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class Chamado {
+@Entity
+public class Chamado implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private LocalDateTime dataAbertura = LocalDateTime.now();
     private LocalDateTime dataFechamento;
@@ -22,7 +27,12 @@ public class Chamado {
     private String titulo;
     private String observacoes;
 
+    @ManyToOne
+    @JoinColumn(name = "tecnico_id")
     private Tecnico tecnico;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     public Chamado(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Tecnico tecnico, Cliente cliente) {

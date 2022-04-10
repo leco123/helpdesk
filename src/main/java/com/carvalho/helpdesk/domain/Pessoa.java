@@ -4,6 +4,8 @@ import com.carvalho.helpdesk.domain.enums.Perfil;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
@@ -12,14 +14,22 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public abstract class Pessoa {
+@Entity
+public abstract class Pessoa implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     protected String nome;
+    @Column(unique = true)
     protected String cpf;
+    @Column(unique = true)
     protected String email;
     protected String senha;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "PERFIS")
     protected Set<Integer> perfis = new HashSet<>();
+
     protected LocalDateTime dataCriacao = LocalDateTime.now();
 
     public Pessoa(){
