@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 public class TecnicoDTO {
     protected Integer id;
@@ -26,6 +25,11 @@ public class TecnicoDTO {
     protected Set<Integer> perfis = new HashSet<>();
     protected LocalDateTime dataCriacao;
 
+    public TecnicoDTO() {
+        super();
+        addPerfil(Perfil.CLIENTE);
+    }
+
     public TecnicoDTO(Tecnico tecnico) {
         super();
         this.id = tecnico.getId();
@@ -35,6 +39,7 @@ public class TecnicoDTO {
         this.senha = tecnico.getSenha();
         this.perfis = tecnico.getPerfis().stream().map(Perfil::getCodigo).collect(Collectors.toSet());
         this.dataCriacao = LocalDateTime.now();
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Set<Perfil> getPerfis() {

@@ -1,6 +1,7 @@
 package com.carvalho.helpdesk.services;
 
 import com.carvalho.helpdesk.domain.Tecnico;
+import com.carvalho.helpdesk.domain.dtos.TecnicoDTO;
 import com.carvalho.helpdesk.domain.repository.TecnicoRepository;
 import com.carvalho.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,11 @@ public class TecnicoService {
 
     public List<Tecnico> findAll() {
         return tecnicoRepository.findAll();
+    }
+
+    public Tecnico create(TecnicoDTO tecnicoDTO) {
+        tecnicoDTO.setId(null);
+        Tecnico newTecnico = new Tecnico(tecnicoDTO);
+        return tecnicoRepository.save(newTecnico);
     }
 }
