@@ -1,12 +1,10 @@
 package com.carvalho.helpdesk.domain.dtos;
 
-import com.carvalho.helpdesk.domain.Tecnico;
+import com.carvalho.helpdesk.domain.Cliente;
 import com.carvalho.helpdesk.domain.enums.Perfil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -17,7 +15,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @AllArgsConstructor
-public class TecnicoDTO {
+public class ClienteDTO {
     protected Integer id;
     @NotNull(message = "O campo Nome é requerido")
     protected String nome;
@@ -29,19 +27,19 @@ public class TecnicoDTO {
     protected Set<Integer> perfis = new HashSet<>();
     protected LocalDateTime dataCriacao;
 
-    public TecnicoDTO() {
+    public ClienteDTO() {
         super();
         addPerfil(Perfil.CLIENTE);
     }
 
-    public TecnicoDTO(Tecnico tecnico) {
+    public ClienteDTO(Cliente cliente) {
         super();
-        this.id = tecnico.getId();
-        this.nome = tecnico.getNome();
-        this.cpf = tecnico.getCpf();
-        this.email = tecnico.getEmail();
-        this.senha = tecnico.getSenha();
-        this.perfis = tecnico.getPerfis().stream().map(Perfil::getCodigo).collect(Collectors.toSet());
+        this.id = cliente.getId();
+        this.nome = cliente.getNome();
+        this.cpf = cliente.getCpf();
+        this.email = cliente.getEmail();
+        this.senha = cliente.getSenha();
+        this.perfis = cliente.getPerfis().stream().map(Perfil::getCodigo).collect(Collectors.toSet());
         this.dataCriacao = LocalDateTime.now();
         addPerfil(Perfil.CLIENTE);
     }

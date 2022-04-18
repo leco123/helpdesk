@@ -3,8 +3,10 @@ package com.carvalho.helpdesk.domain;
 import com.carvalho.helpdesk.domain.enums.Perfil;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -21,9 +23,13 @@ public abstract class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     protected String nome;
+
     @Column(unique = true)
+    @CPF
     protected String cpf;
+
     @Column(unique = true)
+    @Email
     protected String email;
     protected String senha;
     @ElementCollection(fetch = FetchType.EAGER)
