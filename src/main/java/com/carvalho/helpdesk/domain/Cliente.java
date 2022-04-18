@@ -1,5 +1,6 @@
 package com.carvalho.helpdesk.domain;
 
+import com.carvalho.helpdesk.domain.dtos.ClienteDTO;
 import com.carvalho.helpdesk.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +21,8 @@ public class Cliente extends Pessoa {
     @OneToMany(mappedBy = "cliente")
     private List<Chamado> chamados = new ArrayList<>();
 
-    public Cliente() {
-        super();
+    public Cliente(@Valid ClienteDTO clienteDTO) {
+        super(clienteDTO.getId(), clienteDTO.getNome(), clienteDTO.getCpf(), clienteDTO.getEmail(), clienteDTO.getSenha());
         addPerfil(Perfil.CLIENTE);
     }
 
