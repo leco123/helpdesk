@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import javax.xml.bind.ValidationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +45,15 @@ public class TecnicoService {
         validaPorCPFEEmail(tecnicoDTO);
         oldTecnico = new Tecnico(tecnicoDTO);
         return tecnicoRepository.save(oldTecnico);
+    }
+
+    public void delete(Integer id) {
+        Tecnico tecnico = findById(id);
+        if(tecnico.getChamados().size() > 0) {
+            throw new DataIntegrityViolationException("Técnico possui ordens de serviços e não pode ser deletado!");
+        }
+
+        tecnicoRepository.deleteById(id);
     }
 
     private void validaPorCPFEEmail(TecnicoDTO tecnicoDTO) {
