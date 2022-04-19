@@ -3,7 +3,9 @@ package com.carvalho.helpdesk.domain;
 import com.carvalho.helpdesk.domain.dtos.ClienteDTO;
 import com.carvalho.helpdesk.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -15,6 +17,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cliente extends Pessoa {
 
     @JsonIgnore
