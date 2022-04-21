@@ -8,6 +8,7 @@ import com.carvalho.helpdesk.domain.repository.TecnicoRepository;
 import com.carvalho.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.carvalho.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -22,6 +23,8 @@ public class TecnicoService {
     private TecnicoRepository tecnicoRepository;
     @Autowired
     private PessoaRepository pessoaRepository;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     public Tecnico findById(Integer id) {
         Optional<Tecnico> tecnico = tecnicoRepository.findById(id);
@@ -34,6 +37,7 @@ public class TecnicoService {
 
     public Tecnico create(TecnicoDTO tecnicoDTO) {
         tecnicoDTO.setId(null);
+        tecnicoDTO.setSenha(encoder.encode(tecnicoDTO.getSenha()));
         validaPorCPFEEmail(tecnicoDTO);
         Tecnico newTecnico = new Tecnico(tecnicoDTO);
         return tecnicoRepository.save(newTecnico);

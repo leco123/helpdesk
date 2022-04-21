@@ -10,6 +10,7 @@ import com.carvalho.helpdesk.domain.repository.ChamadoRepository;
 import com.carvalho.helpdesk.domain.repository.ClienteRepository;
 import com.carvalho.helpdesk.domain.repository.TecnicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -23,22 +24,24 @@ public class DBService {
     private ClienteRepository clienteRepository;
     @Autowired
     private ChamadoRepository chamadoRepository;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     public void instanciaDB() {
-        Tecnico tec1 = new Tecnico(null, "Silvana Bianca de Paula", "68617252502", "silvana-depaula71@marcossousa.com","TwMoWFPNrb");
+        Tecnico tec1 = new Tecnico(null, "Silvana Bianca de Paula", "68617252502", "silvana-depaula71@marcossousa.com", encoder.encode("123"));
         tec1.addPerfil(Perfil.ADMIN);
-        Tecnico tec2 = new Tecnico(null, "Henrique Rodrigo Thiago da Rocha", "25590509602", "henrique_darocha@51hotmail.com","kZgw2oCcM6");
+        Tecnico tec2 = new Tecnico(null, "Henrique Rodrigo Thiago da Rocha", "25590509602", "henrique_darocha@51hotmail.com", encoder.encode("123"));
         tec1.addPerfil(Perfil.ADMIN);
-        Tecnico tec3 = new Tecnico(null, "Olivia Andreia Isabela Drumond", "42312589613", "olivia.andreia.drumond@ieee.org","FEyFqMh6is");
-        Tecnico tec4 = new Tecnico(null, "Sophia Amanda Barbosa", "29625540407", "sophia-barbosa75@fluxioneventos.com.br","YzMCyjSuPg");
-        Tecnico tec5 = new Tecnico(null, "Eduarda Ana de Paula", "74651447953", "eduarda.ana.depaula@azevedoalves.com.br","3HUJ8S4d5e");
-        Tecnico tec6 = new Tecnico(null, "João Manoel Gonçalves", "18854532134", "joaomanoelgoncalves@technocut.com.br","5dlPiRaZG9");
+        Tecnico tec3 = new Tecnico(null, "Olivia Andreia Isabela Drumond", "42312589613", "olivia.andreia.drumond@ieee.org", encoder.encode("123"));
+        Tecnico tec4 = new Tecnico(null, "Sophia Amanda Barbosa", "29625540407", "sophia-barbosa75@fluxioneventos.com.br", encoder.encode("123"));
+        Tecnico tec5 = new Tecnico(null, "Eduarda Ana de Paula", "74651447953", "eduarda.ana.depaula@azevedoalves.com.br", encoder.encode("123"));
+        Tecnico tec6 = new Tecnico(null, "João Manoel Gonçalves", "18854532134", "joaomanoelgoncalves@technocut.com.br", encoder.encode("123"));
 
-        Cliente cli1 = new Cliente(null, "Luzia Aurora Cecília Duarte", "89777316747", "luzia_duarte@henrimar.com.br", "csdeyySxgE");
-        Cliente cli2 = new Cliente(null, "Camila Eliane Marcela Galvão", "75577761948", "camila_eliane_galvao@redex.com.br", "Ga0alYJM44");
-        Cliente cli3 = new Cliente(null, "Mariana Lara Brito", "10989032000", "mariana_lara_brito@coldblock.com.br", "HyRwO46Szz");
-        Cliente cli4 = new Cliente(null, "André Leonardo Anderson Alves", "85617767496", "landre_leonardo_alves@oliveiracontabil.com.br", "iON8Wuy2X6");
-        Cliente cli5 = new Cliente(null, "Marcos Márcio Nogueira", "97471265329", "marcosmarcionogueira@dkcarmo.com", "cw0tzqskKb");
+        Cliente cli1 = new Cliente(null, "Luzia Aurora Cecília Duarte", "89777316747", "luzia_duarte@henrimar.com.br",  encoder.encode("123"));
+        Cliente cli2 = new Cliente(null, "Camila Eliane Marcela Galvão", "75577761948", "camila_eliane_galvao@redex.com.br",  encoder.encode("123"));
+        Cliente cli3 = new Cliente(null, "Mariana Lara Brito", "10989032000", "mariana_lara_brito@coldblock.com.br",  encoder.encode("123"));
+        Cliente cli4 = new Cliente(null, "André Leonardo Anderson Alves", "85617767496", "landre_leonardo_alves@oliveiracontabil.com.br",  encoder.encode("123"));
+        Cliente cli5 = new Cliente(null, "Marcos Márcio Nogueira", "97471265329", "marcosmarcionogueira@dkcarmo.com",  encoder.encode("123"));
 
         Chamado chamado1 = new Chamado(null, Prioridade.BAIXA, Status.ABERTO, "Teste 1", "observação 01", tec1, cli1);
         Chamado chamado2 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Teste 2", "observação 02", tec2, cli2);
