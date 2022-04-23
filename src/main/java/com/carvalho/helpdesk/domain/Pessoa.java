@@ -1,10 +1,14 @@
 package com.carvalho.helpdesk.domain;
 
 import com.carvalho.helpdesk.domain.enums.Perfil;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -15,15 +19,20 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
 public abstract class Pessoa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     protected String nome;
+
     @Column(unique = true)
+    @CPF
     protected String cpf;
+
     @Column(unique = true)
+    @Email
     protected String email;
     protected String senha;
     @ElementCollection(fetch = FetchType.EAGER)
@@ -38,6 +47,7 @@ public abstract class Pessoa implements Serializable {
     }
 
     public Pessoa(Integer id, String nome, String cpf, String email, String senha) {
+        super();
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -46,20 +56,20 @@ public abstract class Pessoa implements Serializable {
         addPerfil(Perfil.CLIENTE);
     }
 
+    public Set<Perfil> getPerfis() {
+        return perfis.stream().map(Perfil::toEnum).collect(Collectors.toSet());
+    }
+
+    public void addPerfil(Perfil perfil){
+        this.perfis.add(perfil.getCodigo());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pessoa pessoa = (Pessoa) o;
         return id.equals(pessoa.id) && cpf.equals(pessoa.cpf);
-    }
-
-    public Set<Perfil> getPerfis() {
-        return perfis.stream().map(perfilcodigo -> Perfil.toEnum(perfilcodigo)).collect(Collectors.toSet());
-    }
-
-    public void addPerfil(Perfil perfil){
-        this.perfis.add(perfil.getCodigo());
     }
 
     @Override
