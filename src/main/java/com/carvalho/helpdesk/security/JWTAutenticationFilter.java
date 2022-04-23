@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -22,8 +23,8 @@ import java.util.Date;
  * Gerenciar as autenticações
  * @author Alex de Carvalho
  */
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class JWTAutenticationFilter extends UsernamePasswordAuthenticationFilter {
 
    // Principal internface para estratégia da aplicação ele valida se usuário/principal esta autenticado ou não
