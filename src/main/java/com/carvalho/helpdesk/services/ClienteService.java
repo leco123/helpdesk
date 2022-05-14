@@ -45,6 +45,9 @@ public class ClienteService {
     public Cliente update(Integer id, @Valid  ClienteDTO clienteDTO) {
         clienteDTO.setId(id);
         Cliente oldCliente = findById(id);
+        if (!clienteDTO.getSenha().equals(oldCliente.getSenha())) {
+            clienteDTO.setSenha(encoder.encode(oldCliente.getSenha()));
+        }
         validaPorCPFEEmail(clienteDTO);
         oldCliente = new Cliente(clienteDTO);
         return clienteRepository.save(oldCliente);
